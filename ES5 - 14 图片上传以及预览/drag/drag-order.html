@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖动小例子</title>
+    <style>
+        .box1, .box2 {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #000;
+        }
+        .box2 {
+            height: 500px;
+        }
+        .demo {
+            list-style: none;
+            background-color: aqua;
+            margin: 10px;
+            height:  20px;
+        }
+    </style>
+</head>
+<body>
+    <ul class="box1" id="box1Out">
+        <li class="demo" draggable="true">1</li>
+        <li class="demo" draggable="true">2</li>
+        <li class="demo" draggable="true">3</li>
+    </ul>
+    <ul class="box2" id="box2Frame"></ul>
+    <script>
+        var demoList = document.getElementsByClassName('demo');
+        var dragDom = null;
+        
+        // document.getElementById('box1Out').addEventListener('dragstart',function(ev){
+        //     var target = ev.target;
+        //     if(target.className=='demo') {
+        //         dragDom = target;
+        //     }
+        // },false);
+        
+        for (var i = 0; i < demoList.length; i++) {
+            demoList[i].ondragstart = function (e){      
+                dragDom = this;
+            }
+        }
+
+        var box2Frame = document.getElementById('box2Frame');
+        box2Frame.ondragover = function (e) {
+            e.preventDefault();
+        }
+        box2Frame.ondrop = function (e) {
+            this.appendChild(dragDom);
+        }
+
+    </script>
+</body>
+</html>

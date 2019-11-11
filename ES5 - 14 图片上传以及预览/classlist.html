@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="classListDom" class="test name ds">ssss</div>
+    <script>
+        // classList , 兼容问题 ，支持IE10以上
+        // babel-polyfill.js
+        // polyfill
+        // HTMLDivElement  继承 HTMLElement
+
+var isClsList = 'classList' in HTMLElement.prototype;
+if(!isClsList) {
+    Object.defineProperty(HTMLElement.prototype,'classList',{
+        get:function(){
+            // add, remove ,contains,toggle
+            // this  - > 
+            var _self = this;
+            return {
+                add:function(cls){
+                    if(!this.contains(cls)){
+                        _self.className +=' ' + cls;
+                    }
+                },
+                remove(cls){
+                    if(this.contains(cls)){ 
+                        var reg= new RegExp(cls);   
+                        _self.className =  _self.className.replace(reg,'');
+                    }
+                },
+                contains(cls){      
+                  var index =  _self.className.indexOf(cls);
+                    return  index!=-1 ? true : false;
+                },
+                toggle(cls){
+                    if(this.contains(cls)){ 
+                        this.remove(cls)
+                    } else {
+                        this.add(cls)
+                    }
+                }
+            }
+        }
+    })
+}
+
+var classListDom = document.getElementById('classListDom');
+classListDom.classList.contains('test')
+classListDom.classList.add('ok')
+classListDom.classList.toggle('ok')
+
+
+     </script>
+</body>
+</html>

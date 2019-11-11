@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>访问器属性</title>
+</head>
+<body>
+    <script>
+        var testObj = {
+            link:'ppp'
+        };
+        var testOBJ2 = Object.create(testObj,{
+            //数据属性
+            name:{
+                value:'laney',
+                writable:true,
+                enumerable:false,
+                configurable:true 
+            },
+            country:{
+                value:'china',
+                writable:true,
+                enumerable:true,
+                configurable:true 
+            },
+            //访问器属性 4-
+            infoPerson:{
+                get(){
+                    return this.name + 'come form ' +this.country
+                },
+                set(name,country){
+                    this.name = name
+                    this.country = country
+                },
+                enumerable:true,
+                configurable:true 
+            }
+        })
+        
+
+        
+    </script>
+</body>
+</html>

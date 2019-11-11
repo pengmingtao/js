@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖动事件讲解</title>
+    <style>
+        .box1, .box2 {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #000;
+        }
+        .box2 {
+            height: 500px;
+        }
+        .demo {
+            list-style: none;
+            background-color: aqua;
+            margin: 10px;
+            height:  20px;
+            width:100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- A -->
+    <!-- 图片和链接默认可以拖动 -->
+    <div class="demo" draggable="true"></div> 
+
+    <!-- B -->
+    <div  id="wrapper" style="width:400px;height:500px;background: red;">
+    </div>
+  
+    <script>
+        var demo = document.getElementsByClassName('demo')[0];
+       
+        demo.ondragstart = function (e) {
+             //用户开始拖动元素时触发
+            // console.log('ondragstart');
+            // console.log(e);  
+        }
+        demo.ondrag = function (e) {
+            //元素正在拖动时触发,一直在监听
+            // console.log('ondrag');
+            // console.log(e);  
+        }
+        demo.ondragend  = function (e) {
+            //用户完成元素拖动后触发
+            // console.log('ondragend ');
+            // console.log(e);  
+        }
+
+        // //当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+        wrapper.ondragover = function (e) {
+            //被拖动的对象在 另一对象容器（dropbox）范围内 拖动时触发此事件
+            console.log('dragover');
+            e.preventDefault()
+        }
+        wrapper.ondragenter = function(){
+            console.log('ondragenter');
+        }
+        
+        wrapper.ondrop = function (e) {
+             //释放鼠标键时触发此事件
+            console.log('ondrop');
+            // console.log(e)
+        }
+        wrapper.ondragleave = function(){
+            console.log('ondragleave');
+        }
+        
+    </script>
+
+   
+</body>
+</html>
