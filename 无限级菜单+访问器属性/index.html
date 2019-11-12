@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>无限极目录树</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul,li {
+            list-style-type: none;
+        }
+    .toShow {
+        display: none;
+    }
+    .first-menu>.item {
+        width:250px;
+    }
+   .first-menu .item{  
+         
+          line-height: 35px;
+          background: orange;
+          margin-bottom: 1px;
+          overflow-x: hidden;
+          margin-top: 1px;
+          cursor: pointer;
+         
+    }
+    .first-menu .item b {
+          display: block;
+          position: relative;
+       }
+    .first-menu .item b:after {
+           content:'>';
+           position: absolute;
+           right:10px;
+           top:0px;
+           color:#fff;
+           font-size: 16px;
+           font-weight: normal;
+       }
+    .first-menu .item ul li{ 
+        background: powderblue;
+        box-sizing: border-box;
+        padding-left: 30px;;
+    } 
+
+    </style>
+</head>
+<body>
+    <div class="box-menu dl" id="boxMenu">
+         <!-- <ul>
+             <li>AAA
+                 <ul>
+                     <li>a1
+                         <ul>
+                             <li>a1-1</li>
+                             <li>a1-2</li>
+                         </ul>
+                     </li>
+                     <li>a2</li>
+                     <li>a3</li>
+                 </ul>
+             </li>
+             <li>BBB</li>
+             <li>CCC</li>
+             <li>DDD</li>
+         </ul> -->
+
+         <!-- <ul>
+             <li>AAA
+                    <ul>
+                        <li>a1
+                            <ul>
+                                <li>a1-1</li>
+                            </ul>
+                        </li>
+                        <li>a2</li>
+                        <li>a3</li>
+                    </ul>
+             </li>
+             <li>BBB
+                 <ul>
+                     <li>b1</li>
+                     <li>b2</li>
+                     <li>b3</li>
+                 </ul>
+             </li>
+
+             <li>CCC</li>
+              <li>DDD</li>
+         </ul> -->
+    </div>
+     <script src="./main.js"></script>
+    <script>
+         var menudata = [
+                {
+                  name:'AAA',
+                  child:[
+                    {name:'a1',child:[{name:'a1-1'},{name:'a1-2'}]},
+                    {name:'a2'},
+                    {name:'a3',child:[{name:'a3-1'},{name:'a3-2',child:[{name:'a3-2-1'},{name:'a3-2-2'}]}]}
+                  ]
+                },
+                {
+                  name:'BBB',
+                  child:[{name:'b1'},{name:'b2'},{name:'b3'}]
+                },
+                {
+                  name:'CCC',
+                  child:[{name:'c1'}]
+                },
+                {
+                  name:'DDD'
+                }
+            ];
+//1.拼接目录树
+//2.渲染到dom节点
+//3.添加点击事件
+
+var objTree = {
+    // boxMenu
+    init(el,data){
+        //2.渲染到dom节点
+        this.elDom = document.getElementById(el);
+        this.elDom.innerHTML = this.createTree(data,true);
+        this.clickFun();
+
+    },
+    createTree(data,isFirst){
+        //1.拼接目录树
+        var mtr = isFirst ? '<ul class="first-menu">':'<ul class="toShow">';
+            for(var i=0,len=data.length;i<len;i++) {
+                if(data[i].child && data[i].child.length>0){
+                    // mtr +='<li class="item"><b>'+data[i].name+'</b>';
+                     mtr +='<li class="item">'+data[i].name;
+                        mtr +=this.createTree(data[i].child,false);
+                    mtr +='</li>';
+                } else {
+                    mtr +='<li class="item">'+data[i].name+'</li>'
+                }   
+            }
+
+            mtr += '</ul>'
+            return mtr;
+    },
+    clickFun(){
+        this.elDom.addEventListener('click',function(ev){
+            ev.stopPropagation(); //阻止事件冒泡
+            // ev.preventDefault();
+            var target = ev.target;
+            
+            // var nextUl = target.parentElement.querySelector('ul');
+            // var nextUl = target.nextElementSibling;
+
+            //有b的时候
+            // if(target.tagName.toUpperCase()=='B'){
+            //     // if(/toShow/.test(nextUl.className)){
+            //     //     classTool.removeClass(nextUl,'toShow');
+            //     // } else {
+            //     //     classTool.addClass(nextUl,'toShow');
+            //     // }
+            //     classTool.toggleClass(nextUl,'toShow');
+            // }
+
+            var firstE = target.firstElementChild;
+            
+            if(firstE){
+                //显示隐藏
+               
+                // if(/toShow/.test(firstE.className)){
+                //     firstE.classList.remove('toShow')
+                // } else {
+                //     firstE.classList.add('toShow');
+                // }
+
+                var operate = /toShow/.test(firstE.className) ?'remove':'add';
+                firstE.classList[operate]('toShow');
+            }
+
+        },false);
+    }
+}
+   
+
+objTree.init('boxMenu',menudata);
+
+    </script>
+</body>
+</html>
