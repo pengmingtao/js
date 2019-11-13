@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发布订阅</title>
+</head>
+<body>
+    <script>
+        
+        // list:{
+        //     red:[fn1,fn2],
+        //     blue:[fn4,fn5]
+        // },
+
+
+        //发布者
+        var shoeObj = {
+            //缓存列表，存放订阅者的信息
+            list:{},
+            //添加订阅
+            listen:function(key,fn){
+                if(!this.list[key]){
+                    this.list[key] = [];
+                }
+               typeof fn==='function' &&  this.list[key].push(fn);
+            },
+            // 发布信息
+            trigger:function(){
+
+                // 取出颜色 color
+                // var key = [].shift.call(arguments);
+                var key = Array.prototype.shift.call(arguments);
+                // var key =  Array.from(arguments).shift();
+                
+                var fns = this.list[key];
+                for(var i=0,len=fns.length;i<len;i++) {
+                    var fn = fns[i];
+                    // fn();
+                    fn.apply(this,arguments);
+                }
+            }   
+        }
+
+
+        //使用
+        shoeObj.listen('red',function(size){
+            console.log('小红');
+            console.log(size);
+        })
+
+        shoeObj.listen('red',function(size){
+            console.log('小枚');
+            console.log(size);
+        })
+
+        shoeObj.listen('blue',function(size){
+            console.log('小明');
+            console.log(size);
+        })
+
+        // shoeObj.trigger('red',20)
+
+        shoeObj.trigger('blue',30)
+
+
+     </script>
+</body>
+</html>

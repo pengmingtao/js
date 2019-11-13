@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发布订阅</title>
+</head>
+<body>
+    <script src="./js/main.js"></script>
+    <script src="./js/global.js"></script>
+    <script>
+        //使用
+
+        //订阅鞋子
+        // var shoeObj = Object.create(eventObj);
+
+        // var fn1 = function(size){
+        //     console.log('小红');
+        //     console.log(size);
+        // };
+        // shoeObj.listen('red',fn1)
+
+        // shoeObj.listen('red',function(size){
+        //     console.log('小枚');
+        //     console.log(size);
+        // })
+
+        // shoeObj.listen('blue',function(size){
+        //     console.log('小明');
+        //     console.log(size);
+        // })
+
+        // shoeObj.removeListen('red',fn1);
+
+        // shoeObj.trigger('red',20)
+        // shoeObj.trigger('blue',30)
+
+
+        // var closeObj = Object.create(eventObj);
+
+        // closeObj.listen('orange',function(size){
+        //     console.log('花花');
+        //     console.log('尺码：'+size);
+        // })
+
+        // closeObj.listen('green',function(size){
+        //     console.log('松松');
+        //     console.log('尺码：'+size);
+        // })
+
+
+        var ajaxObj =  Object.create(eventObj);
+        ajaxObj.listen('success',function(data){
+            console.log(data);
+        })
+
+        function getData(){
+            xmlAjax({
+                    method:'post',
+                    url:'http://localhost:3000/api/msg',
+                    done:function(data){  
+                        ajaxObj.trigger('success',{
+                            fromData1:data
+                        });
+                    }
+            });
+
+            // setTimeout(function(){
+            //     ajaxObj.trigger('success',{
+            //         name:'laney'
+            //     })
+            // },2000)
+        }
+        getData();
+
+     </script>
+</body>
+</html>
