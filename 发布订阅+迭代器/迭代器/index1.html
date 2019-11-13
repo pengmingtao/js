@@ -14,23 +14,37 @@
         //     // debugger
         // })
 
-        function each(obj,fn){
-            if(Array.isArray(obj)) {
-                for(var i=0,len=obj.length;i<len;i++) {
-                    // fn(obj[i],i);
-                    fn.call(obj,obj[i],i,obj);
-                    // cb.apply(this,[obj[i],i,obj])
-                }  
+        // function each(obj,fn){
+        //     if(Array.isArray(obj)) {
+        //         for(var i=0,len=obj.length;i<len;i++) {
+        //             // fn(obj[i],i);
+        //             fn.call(obj,obj[i],i,obj);
+        //             // cb.apply(this,[obj[i],i,obj])
+        //         }  
+        //     } else {
+        //         for(var i in obj) {  
+        //             fn.call(obj,i,obj[i],obj);
+        //         }
+        //     }
+        // }
+
+        function each(source,fn){
+            if (Array.isArray(source)) {
+                for(var i=0,len=source.length;i<len;i++){
+                    fn.call(source,source[i],i,source)
+                }
             } else {
-                for(var i in obj) {  
-                    fn.call(obj,i,obj[i],obj);
+                for(obj in source){
+                    fn.call(source,obj,source[obj],source)
                 }
             }
+
         }
-
-        each([10,20,30],function(item,index,arr){
-
-        });
+        // each([10,20,30],function(item,index,arr){
+        //     console.log(item)
+        //     console.log(index)
+        //     console.log(arr)
+        // });
 
         each({
             a:1,
