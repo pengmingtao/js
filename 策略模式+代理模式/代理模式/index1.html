@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>保护代理</title>
+</head>
+<body>
+    <script>
+        //主体，发送
+        function sendMsg(msg){
+            console.log(msg);
+        }
+        //代理
+        function proxySend(msg) {
+            msg = msg.replace(/煤矿/,'');
+            sendMsg(msg);
+        }
+        proxySend('煤矿，大家好')
+        // sendMsg('煤矿，大家好');
+        
+        </script>
+</body>
+</html>

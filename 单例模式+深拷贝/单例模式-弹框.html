@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单例模式</title>
+</head>
+<body>
+   <button type="button" id="btnpop" >弹出</button>
+   <button type="button" id="btnframe" >iframe</button>
+  
+   <script>
+    //   //弹层,创建了多层
+    //   var createEl = function(){
+    //     var div = document.createElement("div");
+    //     div.innerHTML = '内容内容';
+    //     div.style.display = 'none';
+    //     document.body.appendChild(div);
+    //     return div;
+    //   };
+    //   document.getElementById("btnpop").onclick = function(){
+    //     var el = createEl();
+    //     el.style.display = 'block';
+    //   };
+    
+    //单例目的
+    // var div ;
+    // var createEl = function(){
+    //     if(!div) {
+    //         div = document.createElement("div");
+    //         div.innerHTML = '内容内容';
+    //         div.style.display = 'none';
+    //         document.body.appendChild(div);
+    //     } 
+    //     return div;
+    //   };
+    //   document.getElementById("btnpop").onclick = function(){
+    //     var el = createEl();
+    //     el.style.display = 'block';
+    //   };
+ //不足：全局变量污染
+
+// 闭包,惰性单例
+// function createEl(){
+//     var div;
+//     return function(){
+//         if(!div){
+//             // div = '1';
+//             div = document.createElement("div");
+//             div.innerHTML = '内容内容';
+//             div.style.display = 'none';
+//             document.body.appendChild(div);
+//         }
+//         return div;
+//     }
+// }
+
+// var fun01 = createEl();
+// document.getElementById("btnpop").onclick = function(){
+//     var el = fun01();
+//     el.style.display = 'block';
+// };
+
+//把变 的部分封装，不变的隔离 ，开发-封闭原则
+
+
+function createEl(fn){
+    var result;
+    return function(){
+        if(!result){
+            // var f1=  createWindow();
+            result=  fn.apply(this,arguments);
+            // result =  fn()
+        }
+        return result;
+    }
+}
+
+function createWindow(){
+    //创建div
+    var div = document.createElement("div");
+        div.innerHTML = '内容内容';
+        div.style.display = 'none';
+        document.body.appendChild(div);
+        return div;
+}
+//iframe
+function createIframe(){
+    //创建div
+    var iframe = document.createElement("iframe");
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+     return iframe;
+}
+
+// var fun01 = createEl(createWindow); 
+var fun01 = createEl(function(){
+    var div = document.createElement("div");
+        div.innerHTML = '内容内容';
+        div.style.display = 'none';
+        document.body.appendChild(div);
+        return div;  
+}); 
+var fun02 = createEl(createIframe); 
+
+document.getElementById("btnpop").onclick = function(){
+    var el = fun01();
+    // var el = fun01('laney','www');
+    el.style.display = 'block';
+};
+
+document.getElementById("btnframe").onclick = function(){
+    var el = fun02();
+    el.style.display = 'block';
+};
+
+</script>
+</body>
+</html>

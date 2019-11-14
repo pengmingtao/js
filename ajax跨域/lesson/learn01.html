@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        //1. 创建xml对象
+        var xhr = new XMLHttpRequest();
+
+        //2.创建HTTP请求，链接服务器
+        // xhr.open(method,url,flag);
+        xhr.open('get','http://localhost:3000/info',true);
+        // method :post get head delete put 
+
+        //3. 设置请求头部的方法，必须在open和send之间
+        xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
+        // xhr.setRequestHeader('token','ererewewesdsdsdsdsd');
+       
+
+        //4. 发送数据
+        xhr.send(null);
+
+        //post，有参数
+        // var parm = {
+        //     name:'laney',
+        //     age:'20'
+        // }
+        // xhr.send(JSON.stringify(parm));
+
+        //post没有参数
+        // xhr.send(null);
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState ==4 && xhr.status==200) {
+                
+                // xhr.responseText
+            } else {
+
+            //     switch (xhr.status) {
+            //         case 400:
+            //             console.log('错误请求')
+            //           break;
+            //         case 401:
+            //             console.log('未授权，请重新登录')
+            //           break;
+            //         case 403:
+            //           console.log('拒绝访问')
+            //           break;
+            //         case 404:
+            //           console.log('请求错误,未找到该资源')
+            //           break;
+            //         case 405:
+            //           console.log('请求方法未允许')
+            //           break;
+            //         case 408:
+            //           console.log('请求超时')
+            //           break;
+            //         case 500:
+            //           console.log('服务器内部错误')
+            //           break;
+            //         case 501:
+            //           console.log('网络未实现')
+            //           break;
+            //         case 502:
+            //           console.log('网络错误')
+            //           break;
+            //         case 503:
+            //           console.log('服务不可用')
+            //           break;
+            //         case 504:
+            //           console.log('网络超时')
+            //           break;
+            //         case 505:
+            //           console.log('http版本不支持该请求')
+            //           break;
+            //         default:
+            //           console.log(`连接错误`)
+            //       }
+
+            }
+
+        }
+
+     </script>
+</body>
+</html>

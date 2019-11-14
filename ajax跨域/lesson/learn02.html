@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>验证ajax</title>
+    <script src="./main.js"></script>
+</head>
+<body>
+    <script>
+        xmlAjax({
+            url:'http://localhost:3000/api/info',
+            method:'get',
+            data:{
+                name:'laney',
+                size:'10'
+            },
+            done:function(res){
+                console.log(res);
+            }
+        });
+
+// function p1fun(){
+//     return new Promise(function(resolve,reject){
+//         setTimeout(function(){
+//             resolve('1111');
+//             console.log('11');
+//         },3000);
+//     })
+// }
+
+// function p2fun(){
+//     return new Promise(function(resolve,reject){
+//         setTimeout(function(){
+//             resolve('2222');
+//             console.log('22');
+//         },3000);
+//     })
+// }
+
+// p1fun().then(function(res){
+//     console.log(res);
+//     return  p2fun();
+// }).then(function(data){
+//     console.log(data);
+// })
+
+var p1 = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve('resolve01');
+            console.log('11');
+        },3000);
+})
+
+var p2 = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve('resolve02');
+            console.log('22');
+        },1000);
+})
+
+p1.then(function(data){
+    console.log('---------');
+    console.log(data);
+    return p2;
+}).then(function(res){
+    console.log('---------');
+    console.log(res)
+})
+
+
+        
+
+        // setTimeout(function(){
+        //     console.log('22');
+        // },1000);
+    </script>
+</body>
+</html>

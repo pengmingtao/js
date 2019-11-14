@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>验证ajax</title>
+    <script src="./main.js"></script>
+</head>
+<body>
+    <script>
+        xmlAjax({
+            url:'http://localhost:3000/info',
+            method:'get',
+            data:{
+                name:'laney',
+                size:'10'
+            },
+            done:function(res){
+                debugger
+            }
+        });
+
+var p1 = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve('1111');
+            // console.log('11');
+        },3000);
+})
+
+var p2 = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve('22222');
+            // console.log('11');
+        },1000);
+})
+
+p1.then(function(data){
+    console.log(data);
+    return p2;
+}).then(function(res){
+    console.log(res)
+})
+        
+
+        // setTimeout(function(){
+        //     console.log('22');
+        // },1000);
+    </script>
+</body>
+</html>

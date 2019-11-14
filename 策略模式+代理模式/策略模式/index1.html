@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>策略模式</title>
+</head>
+<body>
+    <script>
+         //年终发绩效
+          // 需求：绩效等级分 A（2）,B（1.5）,C（1）,D（0.8）
+ 
+        //方法一：
+        function salaryBone(level,salary){
+            var mybonus='';
+            switch(level){
+                case 'A':
+                    mybonus = 2 * salary;
+                break;
+                case 'B':
+                    mybonus = 1.5 * salary;
+                break;
+                case 'C':
+                    mybonus = 1 * salary;
+                break;
+                case 'D':
+                    mybonus = 0.8 * salary;
+                break;
+                default:
+                    mybonus = 0.5 * salary;
+                break;
+            }
+            return Number(mybonus);
+        }
+        var p1 = salaryBone('A',5000);
+
+
+        //方法二：
+        var strategies = {
+            'A':function(salary){
+
+                  return  salary*2;
+            },
+            'B':function(salary){
+                  return  salary*1.5;
+            },
+            'C':function(salary){
+                  return  salary*1;
+            },
+            'D':function(salary){
+                  return  salary*0.8;
+            }
+        }
+
+        var calBonus = function(level,salary){
+            return strategies[level](salary);
+        }
+        var b1 = calBonus('A',5000);
+        
+        // strategies['A'](5000)
+
+
+    </script>
+</body>
+</html>

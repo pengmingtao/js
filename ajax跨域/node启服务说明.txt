@@ -1,0 +1,4 @@
+启动服务步骤
+1. cd server-lesson
+2. npm install
+3. node app.js

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>缓存代理</title>
+</head>
+<body>
+    <script>
+        function add(){
+            //伪数组变真数组
+            // Object.prototype.toString.call([])
+            // var arg = Array.prototype.slice.call(arguments);
+            var arg = Array.from(arguments); //es6
+             return arg.reduce(function(a,b){
+                  return a+b;
+             })
+        }
+
+        // var p1= add(1,2,3,4)
+        // var p2= add(10,20,30,40)
+        // var p3= add(10,20,30,40)
+        // var p4= add(10,20,30,40)
+
+        var proxyAdd = (function(){
+            var cache = [];
+            return function(){
+                var arg = Array.from(arguments).join(','); 
+                if(cache[arg]){
+                    return cache[arg];
+                } else {
+                    var ret=  add.apply(this,arguments);
+                    cache[arg] = ret;
+                    return ret;
+                }
+            }
+        })();
+
+        var k1= proxyAdd(1,2,3,4)
+        proxyAdd(10,20,30,40)
+        proxyAdd(10,20,30,40)
+        proxyAdd(10,20,30,40)
+        // proxyAdd(10,20,30,40)
+    </script>
+</body>
+</html>

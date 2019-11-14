@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>深拷贝</title>
+</head>
+<body>
+    <script>
+        //遍历递归实现深拷贝
+        var obj = {
+            name:'song',
+            age:'18',
+            gender:'男',
+           
+            friends:{
+                1:'aa',
+                2:'bb',
+                3:'cc',
+                4:{
+                    kk:'p'
+                }
+            },
+            hobby:['吃饭','睡觉'],
+            sayHello:function(){
+                console.log('hello');
+            }
+        };
+
+   //  Object.prototype.toString.call(obj[key])
+ var newObj={};
+ for(var key in obj) {
+     if(typeof obj[key]=='object'){
+         var newkk = obj[key];
+            //  {
+            //     1:'aa',
+            //     2:'bb',
+            //     3:'cc'
+            // }
+         newObj[key] = {};
+         for(var key2 in newkk) {
+            if(typeof newkk[key2]=='object'){
+                console.log('ppp')
+            } else {
+                newObj[key][key2] = newkk[key];
+            }          
+         }          
+
+     } else {
+        newObj[key] = obj[key];
+     } 
+ }
+
+
+// 传递原对象得到一个 新的对象
+
+//  source :数据， 对象， 字符串
+ function extendDeep(source){
+    var target;
+    if(typeof source!='object'){
+        target = source;
+        return target;
+    }
+    target =  Array.isArray(source)?[]:{};
+    for(var key in source){ 
+        if(typeof source[key]!='object'){
+            target[key] = source[key];
+        } else { 
+            target[key] = extendDeep(source[key])
+        }
+    }
+    return target;
+ }
+ var newObj2  = extendDeep(obj);
+
+    </script>
+</body>
+</html>

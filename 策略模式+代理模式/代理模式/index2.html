@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>虚拟代理</title>
+</head>
+<body style="height:3000px;">
+    <!-- scroll, resize,keyup 等事件频繁触发会引起卡顿 -->
+
+    <script>
+        //主体
+        function scrollHnader(name,age){
+            console.log('ssss');
+        }
+
+        //代替品
+        // var timerk;
+        // function testScroll(){
+        //     clearTimeout(timerk);
+        //     timerk = setTimeout(function(){
+        //         scrollHnader();  //业务逻辑代码
+        //     },1000);
+        // }
+
+        //闭包
+        // function debounce(fn,delay){
+        //     var timerk;
+        //     delay = delay || 300;
+        //     return function(){
+        //         clearTimeout(timerk);
+        //         var arg = arguments;
+        //         timerk = setTimeout(function(){     
+        //             fn.apply(this,arg);
+        //             // scrollHnader();  //业务逻辑代码
+        //         },delay);
+        //     }
+        // }
+        // var proxyFun = debounce(scrollHnader,500);
+        // window.onscroll = function(){
+        //     proxyFun('laney','11');
+        // }
+        //函数的静态属性
+        function debounce2(fn,delay){
+            delay = delay || 300;
+            if(fn.id){
+                clearTimeout(fn.id);
+            }
+            fn.id = setTimeout(function(){          
+                fn();
+             },delay);
+        }
+        window.onscroll = function(){
+            debounce2(scrollHnader.bind(this,'laney'),500); 
+        }
+
+    </script>
+ 
+</body>
+</html>

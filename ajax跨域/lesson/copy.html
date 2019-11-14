@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      
+
+
+        var obj = {
+            a:1,
+            b:{
+                c:2
+            },
+            name:'11'
+
+        };
+        var obj1 = obj;   //都不是浅拷贝
+
+        function deep(obj){
+            var mn = {};
+            for(var key in obj) {
+                mn[key]  = obj[key]
+             }   
+             return  mn;      
+        }
+
+        var obj2 = deep(obj);
+
+        var obj3 = Object.assign({},obj);
+        var {...obj4} = obj;  //扩展运算符
+
+        obj.a =2;
+        obj.b.c =3;
+
+        
+     // obj1
+
+    // Object
+    //浅拷贝
+    // for循环
+    // Object.assign
+    //浅拷贝
+
+    // array
+    // 1. for循环
+    // 2. slice
+    var arr01 = [1,2,3];
+    arr02= arr01.slice(0);
+
+    //3. concat
+    //4. 扩展运算符
+    var [...arr03] = arr01;  //扩展运算符
+    //5.Arrray.from()
+    var arr04 = Array.from(arr01);
+
+    //1. 深拷贝
+    //要复制得 function会丢失，只能用单纯是数据的对象
+    var onk = {
+        name:'lant',
+        aa:{
+            mm:'222'
+        },
+        hello:function(){
+            console.log('ppp');
+        }
+    };
+
+    var onk2= JSON.parse(JSON.stringify(onk));
+
+    // 2.递归调用
+
+
+   
+    var objm = {
+            name:'11',
+            aa:{
+                cc:{
+                    a:1,
+                    b:1
+                },
+                bb:[1,2,3]
+            },
+            age:'12'
+        };
+   
+      var newobj = {}; 
+      
+
+
+
+
+    </script>
+</body>
+</html>

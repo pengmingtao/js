@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多个接口 链式调用</title>
+    <script src="./main2.js"></script>
+</head>
+<body>
+    test
+    <script>
+        
+        xmlAjax({
+            url:'http://localhost:8001/api/msg',
+            type:'post',
+            data:{
+                name:'laney',
+                age:'30'
+            }
+        }).then((res)=>{
+            if(res.result.focus){
+                return xmlAjax({
+                    url:'http://localhost:8001/api/hello',
+                    type:'post',
+                    data:{
+                        name:'laney'
+                    }
+                })
+            }   
+        }).then(function(res){
+            console.log(res);
+        })
+        
+    </script>
+</body>
+</html>
