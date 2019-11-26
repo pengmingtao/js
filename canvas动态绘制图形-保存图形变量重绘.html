@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘制矩形</title>
+</head>
+<body>
+        <canvas id="myCanvas" width="500" height="400" style="border:1px solid red;">
+                <p>您的系统不支持此程序!</p>
+            </canvas>
+            <div id="allStyleBox">
+                    <b>选形状：</b>
+                    <select id="pickShape" tag="shape">
+                        <option value="rect">画矩形</option>
+                        <option value="arc">画圆</option>
+                        <option value="line">画线</option>
+                        <option value="clear">橡皮擦</option>
+                    </select>
+            
+                    <b>选颜色</b>
+                    <select id="pickColor" tag="color">
+                        <option value="red">红色</option>
+                        <option value="black">黑色</option>
+                    </select>
+                    <b>填充 还是 描边</b>
+                    <select id="pickStroke" tag="strokeFill">
+                        <option value="fill">填充</option>
+                        <option value="stroke">描边</option>
+                    </select>
+                    <b>线宽</b>
+                    <select id="pickLine" tag='line'>
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
+                    <b>橡皮擦宽度</b>
+                    <select id="pickClear" tag='clearWidth'>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
+            </div> 
+   <script>
+       var canvas = document.getElementById('myCanvas');
+       var ctx =  canvas.getContext('2d');
+
+       var drawShapeObj = {
+            shape:pickShape.value,
+            color:pickColor.value,
+            line:pickLine.value,
+            strokeFill:pickStroke.value,
+            clearWidth:pickClear.value
+        };
+        var imageData='';
+
+       function dragImg(fn){
+        var moving = false; //标记是否在拖动
+        var dis = {};
+        canvas.onmousedown = function(e){
+              moving = true;
+              dis = {
+                  x:e.clientX,
+                  y:e.clientY
+              }
+          }
+          canvas.onmousemove = function(e){
+                if(!moving) {
+                    return;
+                }  
+                fn && fn.call(e,dis);      
+            }
+            canvas.onmouseup = function(e){
+                moving = false;  
+                 imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+                 console.log(imageData);
+            }
+       }
+
+var shapeFun = {
+    common:function(){
+           ctx.clearRect(0,0,canvas.width,canvas.height);
+           //样式
+            ctx.beginPath();
+            ctx.lineWidth = drawShapeObj.line;
+            ctx.strokeStyle = drawShapeObj.color;
+            ctx.fillStyle =  drawShapeObj.color;
+           
+            shapeFun.reDrawAll();
+    },
+    reDrawAll:function(){
+        //绘制之前的形状
+        imageData && ctx.putImageData(imageData,0,0);
+    },
+    rect:function(dis){
+        // console.log('rect');
+            //画一个矩形 this -- event
+            //思路一：只清除所绘制的那个区域
+            // ctx.clearRect(dis.x,dis.y,this.clientX-dis.x,this.clientY-dis.y);  //清除所画区域
+            shapeFun.common();
+            ctx.rect(dis.x,dis.y,Math.abs(this.clientX-dis.x),Math.abs(this.clientY-dis.y)); //路径
+            ctx[drawShapeObj.strokeFill](); 
+            ctx.closePath();
+    },
+    arc:function(dis){
+        shapeFun.common();
+        var radius = Math.abs(this.clientX - dis.x);
+        ctx.moveTo(dis.x+radius,dis.y);
+        ctx.arc(dis.x,dis.y,radius,0,2*Math.PI,true); 
+        ctx[drawShapeObj.strokeFill](); 
+        ctx.closePath();
+    },
+    line:function(dis){
+        shapeFun.common();
+        ctx.moveTo(dis.x,dis.y);
+        ctx.lineTo(this.clientX,this.clientY);
+        ctx.stroke();
+    },
+    clear:function(dis){
+        console.log('clear');
+        ctx.clearRect(this.clientX,this.clientY,drawShapeObj.clearWidth,drawShapeObj.clearWidth);
+    }
+} 
+    dragImg(shapeFun[drawShapeObj.shape]);
+
+    allStyleBox.addEventListener('change',function(ev){
+        var target = ev.target,
+            tag = target.getAttribute('tag');
+            drawShapeObj[tag] = target.value;
+            dragImg(shapeFun[drawShapeObj.shape]); 
+    })
+   </script>  
+</body>
+</html>
