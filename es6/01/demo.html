@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es第一章</title>
+</head>
+<body>
+    <script>
+        //es5 全局扫描语法错误  2.预编译环节   3.解释一行执行一行
+        // console.log(a)  //undefined
+        // var a= 123;
+
+        //es6 不存在变量提升
+        //console.log(b)  //报错：无法在初始化之前访问'b'
+        // let b = 456;
+        // console.log(b)
+
+        //let 死区
+        // var tep=890
+        // if(true){
+        //     tep = "abc"
+        //     let tep
+        // }
+
+        // typeof 不再是百分百正确
+        // console.log(typeof c)
+        // let c
+         
+        //es5 允许重复声明
+        // var a='123'
+        // var a=456
+        // console.log(a) //456
+
+        //es6不允许重复声明
+        // let e=123
+        // let e=345
+
+        //es5:内层的变量会覆盖外层的变量
+        // var a='全局'
+        // function fn(){
+        //     //预编译找var a
+        //     //var a
+        //     console.log(a)
+        //     if (false) {
+        //         var b='局部'
+        //     }
+        // }
+        // fn()  //undefined
+
+        //es5 立即执行函数
+        // var a="全局";
+        // (function(){
+        //     var a='局部'
+        //     console.log(a)
+        // }())
+        // console.log(a)
+        
+        //es6块级作用域（在各自的块干自己的事情，不影响别的块）
+        // let a='全局'
+        // {
+        //     let a='局部'
+        //     console.log(a)
+        // }
+        // console.log(a)
+        
+        //es6块级作用域允许任意嵌套 内层块可以访问外面块的变量,外层块无法访问内层块的变量
+        // {
+        //     {
+        //         let b='局部'
+        //     }
+        //     console.log(b)//b is not defined
+        // }
+        // {
+        //     {
+        //         let b='局部'
+        //         {
+        //             console.log(b) //局部
+        //         }
+        //     }
+        // }
+
+        //注意
+        // if(true){
+        //     let x=1; //不会报错
+        // }
+        // if (true) let y=2  //会报错
+
+        //const 声明常量不能变
+        // const a=123;
+        // a='123' //报错
+        // const b=true;
+        // b=false //报错
+
+        //const 声明的引用数据类型可以变的是对内存里面的内容 不能变的是地址
+        // const obj ={name:'peach',age:26}
+        // obj.age=18
+        // console.log(obj)  //不报错
+        // obj = {name:'peach',age:26} //报错
+
+        //Object.freeze({}) 冻结对象 
+        // const foo = Object.freeze({name:'青椒'})
+        // foo.name='大白菜'  //重新赋值不能改变name 的值 不会报错
+        // console.log(foo) 
+
+        //es5 全局缺陷 var 声明的变量会放在顶层对象（window）下面
+        // console.log(window.Array)
+        // var Array = '这是数组'  
+        // console.log(window.Array)
+
+        // var a='123'
+        // console.log(window.a)
+
+        // //es6 let声明的变量不会放在顶层对象window下
+        // let b='全局'
+        // console.log(window.b) //undefined
+
+        //数组解构赋值 
+        // let arr=[1,2,3]
+        // console.log(arr[0])
+        // console.log(arr[1])
+        // console.log(arr[2])
+        // let [a,b,c] = [1,2,3]
+        // console.log(a)
+        // console.log(b)
+        // console.log(c)
+
+        // //模式匹配 
+        // let [a,[[b],c]] = [1,[[2],3]]
+        // console.log(a);
+        // console.log(b);
+        // console.log(c);
+
+        // //不完全解构
+        // let [x,y,u] = [1,2,3,4]
+        // console.log(x)
+        // console.log(y)
+        // console.log(u)
+       
+    //    //不完全解构
+    //    let [a,[[b],c]] = [1,[[2],3]]
+    //    console.log(a);
+    //    console.log(b);
+    //    console.log(c);
+    
+       //默认值
+    //    let [f=true]=[]
+    //    console.log(f) //true
+    //    let [a,b='y']=['a']
+    //    console.log(b) //y
+    //    //es6内部使用===判断是否是undefined 如果是undefined 默认值才会生效
+    //    let [x=1]=[null]
+    //    let [y=2] = [undefined]
+    //    console.log(x) //null
+    //    console.log(y) //2
+       // 惰性求值 
+    //    function f(){
+    //        console.log('333')
+    //        return 'fff'
+    //    }
+    //    //let [x=f()] =[1]  //自己有值的时候 不会走默认值 333 不会输出
+    //    let [x=f()] =[]  // 333会输出
+    //    console.log(x)
+    //对象解构赋值
+    // let person ={
+    //     name:'peach',
+    //     age:18
+    // }
+    // //对象的解构和数组不一样 和顺序无关
+    // let {age:age1,name:name1}=person
+    // console.log(name1) //peach
+    // console.log(age1) //18
+    // //解构不成功会返回undefined
+    // let {sex}=person;
+    // console.log(sex)
+
+    // //真正被赋值的是后者 对象解构赋值的实质 会先找到同名的属性 赋值给后者的变量。
+    // let {name:name2}=person
+    // console.log(name2) //peach
+
+    //可以取到继承的属性
+    // const obj1 ={};
+    // const obj2 = {name:'peach'}
+    // Object.setPrototypeOf(obj1,obj2) //obj1继承obj2
+    // //obj1.__proto__=obj2
+    // const {name} =obj1;
+    // console.log(name)
+    const {x=1} ={x:undefined}
+    const {y=3} = {y:null}
+    console.log(x)
+    console.log(y)
+    </script>
+</body>
+</html>
