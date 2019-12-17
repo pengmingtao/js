@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es03</title>
+</head>
+<body>
+    <script>
+        //Map  es6新提出的一种引用型的数据结构 类似于对象 字符串-值  Map 值-值
+
+        //如何声明Map数据结构
+        //  const map=new Map()
+        //  const o={p:'hello'}  //相当于键key
+        //  map.set(o,'content')
+        //  console.log(map.get(o))  //content
+
+        //证明Map 是引用数据类型
+        // const map=new Map();
+        // console.log(map instanceof Map)
+        // console.log(Object.prototype.toString.call(map)==='[object Map]')
+        //接收数组作为参数
+        const map = new Map([
+            ['name','peach'],
+            ['age',18]
+        ])
+        console.log(map.get('name'))
+        console.log(map.get('age'))
+        const m=new Map(
+            [
+                [123,'abc'],
+                ['a',{x:1,y:2}],
+                [3>1,666]
+            ]
+        )
+        console.log(m.get(true))//666
+
+        //404 Not found 500 InterError 404和500 都是数值
+        let errors=new Map([
+            [404,'Not found'],
+            [500,'service error']
+        ])
+
+        console.log(errors.get(404))
+
+        //注意：对象作为键名 传输的是地址
+        // let m1=new Map([
+        //     [123,'abc'],
+        //     [{x:1},'cdf']
+        // ])
+        // console.log(m1.get({x:1})) //undefined
+        let obj1={x:1}
+        let m1=new Map([
+            [123,'abc'],
+            [obj1,'cdf']
+        ])
+        console.log(m1.get(obj1)) //cdf
+
+        //Map接收数组作为参数的本质
+        //为什么接收一个二元数组key  value的形式 就可以通过xxx.get)()获取到呢
+        const array=[
+            ['name','peach'],
+            ['age',18]
+        ]
+        const map1=new Map()
+        array.forEach(
+            ([key,value])=>{
+                console.log([key,value])
+                map1.set(key,value)
+            }
+        )
+
+        //iterator和for...of循环
+        //为什么要有iterator？Map Set 等数据结构 需要一个统一的接口去处理 iterator
+
+         
+
+         //for of 循环遍历过程
+         //1.创建一个指针对象指向数据的初始位置 iterator就是一个指针对象
+         //2.第一次调用指针对象的next() 可以将指针指向第一个成员
+         //3....
+         //直到结束
+         // !!!每一次调用指针对象的时候每次调用next()方法 会返回value（指的是值）done（用来标识遍历是否完成）
+         const arr=[1,2]
+         function makeIterator(array) {
+            let nextIndex=0;
+            return {
+                next:function(){
+                    return nextIndex<array.length?{
+                        value:array[nextIndex++],
+                        done:false
+                    }:{
+                        value:undefined,
+                        done:true
+                    }
+                }
+            }
+         }
+        let res=makeIterator(arr)
+        console.log(res.next())
+        console.log(res.next())
+        console.log(res.next())
+        console.log(res.next())
+
+        //iterator 接口部署在数据结构的Symbol.iterator属性
+        let arr1 = [1,2,3,4,5];
+        let iter = arr1[Symbol.iterator]()
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        console.log(iter.next());
+        //具有iterator 接口Array Map Set String （arguments）
+
+        //对象不具备iterator接口 可以手动部署迭代器接口 让其可以用for...of 循环遍历
+        let obj={
+            data:[1,2,3,4],
+            str:'sdsddd',
+            [Symbol.iterator](){
+                let index=0;
+                let that=this;
+                return {
+                    next(){
+                        return index<that.data.length?{
+                            value:that.data[index++],
+                            done:false
+                        }:{
+                            value:undefined,
+                            done:true
+                        }
+                    }
+                }
+            }
+        }
+        for(let i of obj.data){
+            console.log(i)
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>set实现两个数组的交集并集差集</title>
+</head>
+<body>
+<script>
+    let arr1 = [1,2,3]
+    let arr2 = [4,3,2] 
+
+    let union=new Set([...arr1,...arr2]);
+    console.log(union);
+
+    //交集
+    let intersect=new Set([...arr1].filter(x=>new Set([...arr2]).has(x)));
+    console.log(intersect);
+
+    //差集
+    let diff=new Set([...arr1].filter(x=>!new Set([...arr2]).has(x)));
+    console.log(diff)
+
+    let a = '全局'
+    let obj1 = {
+        a:"局部",
+        say:function(){
+            console.log(this.a);
+        }
+    }
+    obj1.say()
+    let res = obj1.say;
+    res()
+    let obj2 = {
+        a:'局部2',
+        say:function(fn){
+            fn()
+        }
+    }
+    obj2.say(obj1.say)//局部
+    obj2.say = obj1.say
+    obj2.say()
+
+</script>
+</body>
+</html>

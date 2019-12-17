@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6_02</title>
+</head>
+<body>
+<script>
+       //模板字符串
+//        let s1='我爱我的祖国\n和我的母亲'
+//        console.log(s1)
+//        let s2 = `我爱我的祖国
+// 和我的母亲`
+// console.log(s2);
+//     let a = '和我的母亲'
+//     let b = '我爱我的祖国'+a+'还有我的妻子'
+//     console.log(b);
+//     let b1 = `我爱我的祖国${a}还有我的妻子`
+//     console.log(b1);
+//调用函数
+// function fn(str) {
+//     return str
+// }
+// console.log(`亲爱的${fn('祖国')}你好`)
+// //模板字符串嵌套
+// let arr=[1,2,3]
+// const str=(arr)=>`我是一级字符串${arr.map(v=>`${v}`)}`
+// console.log(str(arr))
+//新增的实列方法 (字符串)
+//includes() 返回布尔值
+// let s='hello world'
+// console.log(s.includes('o'))
+// console.log(s.includes('hello w'))
+// // startsWith 支持第二个参数 表示开始搜索的位置 默认从0开始的
+// console.log(s.startsWith('hello',-1))
+// console.log(s.endsWith('world'))
+
+// console.log('x'.repeat(12))
+// console.log('hello world'.repeat(100))
+// console.log('x'.padStart(5,'ab')) 
+// console.log('17'.padEnd(12,'YYYY-MM-DD'))
+// console.log('12-06'.padStart(10,'YYYY-MM-DD'))
+
+// //数组的扩展方法 
+//   //展开运算符 ...拆包
+//   function f(a,b,c){
+//       console.log(arguments)
+//       console.log(a)
+//       console.log(b)
+//       console.log(c)
+//   }
+//   var args = [1,2,3]
+//   f(...args)
+  //后面可以放表达式
+//   let a=1;
+//   const arr=[
+//       ...(a>0?['a']:[])
+//   ]
+//   console.log(arr)
+//   //替代函数的apply方法
+//   let arr1=[1,2,3]
+//   let arr2=[4,5,6]
+//   console.log(arr1.concat(arr2))
+//   console.log(arr1)
+//   //想让arr1改变 es5解决办法
+//   Array.prototype.push.apply(arr1,arr2)
+//   console.log(arr1)
+ //想让arr1改变 es6解决办法
+//   arr1.push(...arr2)
+//   console.log(arr1)
+//   console.log(arr2)
+
+  //复制数组
+//   const a1 = [1,2]
+//   const a2 = a1  
+//   console.log(a1===a2) //true  非浅拷贝 浅拷贝是长得一样地址不一样
+//   a2[0]=10
+//   console.log(a1)
+
+//   const a3=a1.concat()
+//   console.log(a3)
+//   console.log(a1===a3) //false  浅拷贝 没有指向同一个地址
+
+//   const a4=[...a1]
+//   console.log(a4)
+//   console.log(a4===a1) //展开运算符是浅拷贝而不是深拷贝
+  
+  //JSON.parse 实现深拷贝（会丢失函数）
+//   let arr=[{a:1},2,3]
+//   let arr2=JSON.parse(JSON.stringify(arr))
+//   arr2[0].a=2
+//   arr2[1]=5
+//   console.log(arr) //[{a:1},2,3] 
+//   console.log(arr2) //[{a:2},5,3] 
+
+  //打包
+  // const [first,...arr] = [1,2,3,4,5]
+  // console.log(arr)
+  // const [o,...s]=[];
+  // console.log(o) //undef
+  // console.log(s) //[]
+  // const [...arr,first]=[1,2,3,4,5] //报错 扩展运算符只能用在最后一项
+
+
+//Array.from()用于把类数组对象转化成真正的数组
+//部署了iterator接口  都可以用Array.from()转化成真正的数组
+//arguments 有length属性 没有数组的一些方法 如：push
+  function get(a,b,c){
+      console.log(arguments);
+      console.log(Array.from(arguments));
+  }
+  get(1,2,3)
+
+  const copyArr = {
+      '0':'a',
+      '1':'b',
+      length:2
+  }
+  console.log(Array.from(copyArr));
+
+  //Array.of()可以将一组值转化成数组
+  console.log(Array.of(2,3,4,5))
+  // ？ 弥补数组构造函数的一些不足
+  console.log(Array(3)); //[empty*3]
+  console.log(Array(3).length); //3
+  //解决方法
+  console.log(Array.of(3));
+  // 当参数不少于2个时候 
+  console.log(Array(1,2,3));
+
+  // copyWithin()
+    // 1 必须要传的 从该位置开始替换数据
+    // 2 start 从该位置读取数据 默认是0
+    // 3 end
+    console.log([1,2,3,4,5].copyWithin(0,3)); // [4,5,3,4,5]
+
+    //find() findIndex()
+    let arr = [1,2,3,-1,-2,45]
+    let res = arr.find(function(i){
+        return i<0
+    })
+    console.log(res);
+    let resIndex = arr.findIndex(function(i){
+        return i<0
+    })
+    console.log(resIndex)
+
+</script>
+</body>
+</html>
