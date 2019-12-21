@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es03</title>
+</head>
+<body>
+    <script>
+      //对象的扩展方法
+      //1.属性的简写
+    //   const a='a'
+    //   const obj ={a}
+    //   //const obj ={a:a}
+    //   console.log(obj)
+
+      //方法的简写
+    //   const o={
+    //     // say:function(){
+    //     //       return '我是peach'
+    //     // }
+    //     say(){
+    //         return '我是peach'
+    //     }
+    //   }
+    //   console.log(o.say())
+    //   let name='全局'
+    //   const person={
+    //       name:'张三',
+    //       say(){
+    //           console.log(`我的名字是${this.name}`)
+    //       }
+    //   }
+    //   person.say();
+    //   let res=person.say
+    //   res()
+    //属性名表达式
+    // let key='111'
+    // let obj1={
+    //     [key]:true,
+    //     ['a'+'b']:123,
+    //     [`ok`]:456
+    // }
+    // console.log(obj1)
+
+    //super关键字
+    // const proto={
+    //     foo:"土豆"
+    // }
+    // const tomato={
+    //     foo:'西红柿',
+    //     find(){
+    //         return super.foo
+    //     }
+    // }
+    // Object.setPrototypeOf(tomato,proto)  //== __proto__
+    // console.log(tomato.find())
+    //注意：super只能在对象的方法里面用。
+    //   const oProto = {  //报错
+    //     foo:super.foo
+    // }
+    
+    //对象的扩展运算符打包
+    // let {x,y:y,...z} ={x:1,y:2,a:3,b:4}
+    // console.log(z)
+    //注意点：等号的右边必须是一个对象
+    // let {...h}=undefined //报错
+    // let {...v}=null  //报错
+
+    //注意点 ...的位置 必须放在最后一个元素
+    // let {...z,x,y:y} ={x:1,y:2,a:3,b:4} //报错 
+
+    //对象的扩张运算符 拆包
+    //数组的浅拷贝es5 concat()
+    //对象的扩展运算符 ...也是浅拷贝
+    //复制
+    // let obj ={a:1}
+    // let obj1 = obj;  //复制  指向的是同一个地址
+    // obj1.a=2
+    // console.log(obj)
+
+    //浅拷贝
+    // let obj1={...obj}
+    // obj1.a=2
+    // console.log(obj)
+
+    // //es5实现浅拷贝 
+    // let person={name:'peach',age:12}
+    // let person2=Object.assign({},person)
+    // person2.name='cheery'
+    // console.log(person) //{name:'peach',age:12}
+    // console.log(person2)
+
+    //扩展运算符是不是深拷贝？
+    // let obj={a:{a1:1}}
+    // let obj1={...obj}
+    // obj1.a.a1=2
+    // console.log(obj) ///{a:{a1:2}}  ...不是深拷贝
+
+    //Symbol 数据结构
+     // 新提出的一个数据结构 Symbol 基本数据类型
+    // Symbol表示独一无二 第七种数据类型
+    // 作用？ 
+    // 对象的属性是字符串 对象的话隐式调用toString 转化成字符串
+    // let a = {a:1};
+    // let b = {b:2};
+    // let c = {};
+    // c[a] = 3; // [object Object]
+    // c[b] = 4; // [object Object]
+    // console.log(c);
+    // // ? 怎么解决 
+    // let s = Symbol()
+    // console.log(typeof s); // symbol 第七种一般数据类型    
+
+    // let s1 = Symbol('a')
+    // let s2 = Symbol('b')
+    // console.log(s1);
+    // console.log(s2);
+    // console.log(s1.toString());
+    // console.log(s2.toString());
+    // let s3 = Symbol({})
+    // console.log(s3);
+    // // 传入的参数只是值得描述 即使传入的值是一样的 返回值也是不相等的
+    // let s4 = Symbol()
+    // let s5 = Symbol();
+    // console.log(s4 === s5);
+    // let s6 = Symbol('a')
+    // let s7 = Symbol('a');
+    // console.log(s6 === s7);
+
+
+    const obj = {};
+   let sym1 = Symbol('a')
+   let sym2 = Symbol('b')
+   obj[sym1] = 'hello'
+   obj[sym2] = 'world'
+   // Object.getOwnPropertySymbols() 返回一个数组 里面的值是所有用作属性名的Symbol的值
+   const arr = Object.getOwnPropertySymbols(obj)
+   console.log(arr);
+    </script>
+</body>
+</html>
