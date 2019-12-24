@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6 class</title>
+</head>
+<body>
+    <script>
+        //class 是什么？es6提供的一种生成对象实例的写法 es5构造函数的另一种写法（语法糖）
+        //class 作用 ？无疑让写法更清晰 更像面向对象的写法
+
+        //回顾之前es5生成实例对象
+    //     function Person(name,age){
+    //         this.name=name;
+    //         this.age=age;
+    //     }
+    //     // Person.prototype.say=function(){
+    //     //     console.log('我会说话')
+    //     // }
+    //     Person.prototype.say=function(){
+    //         console.log(this)  // Person {name:'张三',age:18}
+    //         console.log(`我是${this.name}`)
+    //     }
+    //     // Person.prototype.say=()=>{  //这种写法是错误的 
+    //     //     console.log(this)   //window 
+    //     //     console.log(`我是${this.name}`)
+    //     // }
+    //    let p = new Person('张三',18)
+    //    p.say()
+
+    //class 生成实例对象
+   
+   
+   //constructor 方法
+   //es class的方法都定义在类的prototype属性上面
+   // 调用es6类的方法就是调用原型上的方法
+    //    class Car{
+    //        constructor(){
+
+    //        }
+    //    }
+    //    类似于
+    //    Car.prototype={
+    //        constructor(){}
+    //    }
+
+    // let bmw=new Car();
+    // console.log(bmw.constructor===Car.prototype.constructor) //true
+    // //??一次性在类里面添加多个方法
+    // Object.assign(Car.prototype,{run(){},toValue(){}})
+    // console.log(Car.prototype)
+
+    //constructor 是class 默认的方法 只要通过new 来生成就会自动调用这个方法 不写也存在
+    // class Car{
+
+    // }
+    // 相当于
+    // class Car{
+    //     constructor(){}
+    // }
+
+    // class Car{
+    //     constructor(){
+    //         console.log(this)
+    //         //指向其他的对象  null 
+    //         return Object.create(null)
+    //     }
+    // }
+    // let bmw=new Car()
+    // console.log(bmw instanceof Car)
+
+    //共享一个原型对象
+    // class Person {
+    //     constructor(name){
+    //         this.name=name
+    //     }
+    //     get(){  //相当于Person.prototype.get=function(){}
+    //         console.log(`我是${this.name}`)
+    //     }
+    // }
+    // // Person.prototype.get=function(){
+    // //     console.log(`我是${this.name}`)
+    // // }
+    // let p1=new Person('peach')
+    // let p2=new Person('cherry')
+    // p1.get()
+    // p2.get()
+
+    //取值函数和存值函数
+    //es5
+    // const person={
+    //     get name(){
+    //         console.log(name)
+    //         return name
+    //     },
+    //     set name(value){
+    //         console.log(value)
+    //         name=value
+    //     }
+    // }
+    // person.name='peach'
+    // console.log(person.name)
+
+    //es6
+    // class MyClass{
+    //     get prop(){
+    //         return MyClass.prop;
+    //     }
+    //     set prop(value){
+    //         MyClass.prop=value
+    //     }
+    // }
+    // let init =new MyClass();
+    // init.prop=123
+    // console.log(init.prop)
+
+    //this指向问题
+    // class Person{
+    //     constructor(){
+    //         this.eat=this.eat.bind(this)
+    //     }
+    //     eat(){
+    //         this.get()
+    //     }
+    //     // eat=()=>{
+    //     //     this.get()
+    //     // }
+    //     get(){
+    //         console.log('这是食物')
+    //     }
+    // }
+    // let p=new Person();
+    // // p.eat()
+    // let {eat}=p;
+    // eat()  
+
+    //第一种箭头函数
+    // eat=()=>{
+    //     this.get();
+    // }
+
+    //第二种 bind
+    // constructor(){
+    //     this.eat=this.eat.bind(this)
+    // }
+
+    // class Person{
+    //      name='tony'  //实例属性的新写法
+    //      constructor(){
+    //         this.eat=this.eat.bind(this)
+    //      }
+    // }
+    // Person.prototype.get = function(){
+    //     console.log('这是食物');
+        
+    // }
+    // Person.prototype.eat = function(){
+    //     console.log(this);
+    //     this.get()
+    // }
+
+    // let person1 = new Person()
+    // console.log(person1.name)
+    // console.log(Person.prototype)
+
+    // let {eat} = person1
+    // // let eat = person1.eat
+    // eat() // ???? 不会输出
+
+    //静态属性 指的是class本身的属性class.propname 并不是实例的属性
+
+    // class Person{
+    //     static age=18
+    //     name='peach'
+    //     static say(){
+    //         console.log('hello')
+    //     }
+    // }
+    // console.log(Person.say()) // hello
+    // let person = new Person()
+    // console.log(Person.age) //18
+    // console.log(Person.say()) // undefined
+    // console.log(person.age) //undefined
+    // console.log(person.name) // peach
+    // console.log(person.say()) // 报错
+
+    //es5闭包实现私有属性
+    //  function Side(){
+    //      var _private='peach';
+    //      this.getPrivate=function(){
+    //          return _private
+    //      }
+    //  }
+    //  var private = new Side();
+    //  console.log(private.getPrivate()) //peach
+    //  console.log(_private) //报错
+
+    //es6 私有属性:能在类的内部使用 不能在类的外部使用
+    // class Math{
+    //     #count =0
+    //     add(){
+    //         this.#count++
+    //         return this.#count
+    //     }
+    // }
+    // let math=new Math()
+    // console.log(math.#count) //报错
+    // console.log(math.add())
+
+    //私有方法
+    class MathAdd{
+        #a;
+        #b;
+        constructor(){
+            this.#a=1;
+            this.#b=2;
+        }
+        #sum=()=>{
+            return this.#a+this.#b
+        }
+        conSum(){
+            console.log(this.#sum())
+        }
+    }
+
+    let mathadd=new MathAdd()
+    // console.log(mathadd.#sum())//报错
+    console.log(mathadd.conSum()) //3
+
+    
+    function get(){
+        name="peach"
+    }
+    console.log(get.name)
+
+    </script>
+</body>
+</html>
