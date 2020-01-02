@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+</head>
+<body>
+    <script>
+        //es6 promise是一种异步的解决方案,解决了es5传统的异步解决方案（回调函数）的回调地狱。
+        //es5 处理异步的方式
+
+        //后者要等待前者执行的结果f2要等待f1 执行完的结果
+        // function f1(callback){
+        //     setTimeout(function(){
+        //         var res='f1'
+        //         console.log('我先执行从后台获取f1')
+        //         callback(res)
+        //     }.bind(this),1000)
+        // }
+        // function f2(value){
+        //     console.log(value)
+        // }
+        // f1(f2)
+
+        //promise 基本用法
+        // const promise=new Promise(function(resolve,reject){
+        //     setTimeout(()=>{
+        //         var flag=true
+        //         flag ? resolve('成功'):reject('失败')
+        //     },1000)
+        // })
+        // promise.then((res)=>{ //resolve的结果
+        //     console.log(res)
+        // },(res)=>{ //reject的结果
+        //     console.log(res)
+        // })
+
+        //promise 创建后会立即执行
+        // console.log('Hi') //1.Hi
+
+        // const promise = new Promise((resolve,reject)=>{
+        //     console.log('Hi Promise')  //2.Hi Promise
+        //     resolve()
+        // })
+        // promise.then(function(){
+        //     console.log('resolve') //4.resolve
+        // })
+        // console.log('Hello') //3.Hello
+        
+        //then 方法是定义在原型上的  Promise.prototype.then后会返回一个新的promise对象
+        // console.log(Promise.prototype.then) 
+        
+        //promise.catch()
+
+        // const promise =new Promise((resolve,reject)=>{
+        //     //第一种
+        //     // throw new Error('test-error')
+        //     //第二种
+        //     try{
+        //         throw new Error('test-error')
+        //     } catch(e){
+        //         reject(e)
+        //     }
+        // })
+        // promise.catch((error)=>{
+        //     console.log(error)
+        // })
+
+        //promise已经变成resolve 再抛出错误是无效的
+        // const promise=new Promise((resolve,reject)=>{
+        //     resolve('成功')
+        //     throw new Error('test-error')
+        // })
+        // promise.then((res)=>{
+        //     console.log(res)
+        // }).catch((e)=>{ //不会捕捉到错误
+        //     console.log(e) 
+        // })
+
+        //错误会一直往下冒
+        // const promise = new Promise((resolve,reject)=>{
+        //     reject('错误')
+        // })
+        // promise.then(res=>{
+        //     console.log(res)
+        // }).then((res)=>{
+        //     console.log(res)
+        // }).catch(function(e){ //会捕捉到错误
+        //     console.log(e)
+        // })
+
+        //promise会吃掉错误
+        //建议:用到promise的时候一般加上catch捕捉
+        // const say=function(){
+        //     return new Promise(function(resolve,reject){
+        //         resolve(v+2)
+        //     })
+        // }
+        // say().then(()=>{
+        //     console.log('我是处理后的')
+        // }).catch((e)=>{
+        //     console.log(e)
+        //     return '123'
+        // }).then((res)=>{
+        //     console.log(res)
+        // })
+
+        // setTimeout(()=>{
+        //     console.log('123456')
+        // },1000)
+
+        //Promise.all
+        //一次性处理多个promise 生成一个新的promise
+        let promise1=new Promise((resolve,reject)=>{
+            // resolve('promise1')
+            reject('333333')
+        })
+        let promise2=new Promise((resolve,reject)=>{
+            resolve('promise2')
+        })
+        Promise.all([promise1,promise2]).then((res)=>{
+            console.log(res)
+        }).catch((e)=>{
+            console.log(e)
+        })
+
+    </script>
+</body>
+</html>

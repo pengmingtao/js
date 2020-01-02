@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>generator函数</title>
+</head>
+<body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //es6提出的一种异步解决方案
+        //执行这个generator函数会返回一个遍历器对象
+        //形式上区别之一 function关键字与函数之间有一个*
+        //形式上区别之二 函数内部使用yield表达式
+
+        //generator 用法
+        // function* helloGenerator(){
+        //     yield 'hello'
+        //     yield 'generator'
+        //     return 123
+        //     yield '3333'
+        // }
+        // let g=helloGenerator()
+        // console.log(g)
+        // console.log(g.next())
+        // console.log(g.next())
+        // console.log(g.next())
+        // console.log(g.next())
+        // console.log(g.next())
+        // console.log(g.next())
+        // console.log(g.next())
+        
+        // //与iterator接口的关系
+        // let myIterator={}
+        // myIterator[Symbol.iterator]=function*(){
+        //     for (let i=0;i<5;i++){
+        //         yield i
+        //     }
+        // }
+        // console.log(myIterator)
+        // console.log([...myIterator])
+
+        //generator函数执行返回一个迭代器对象 这一个对象本身也有Symbol.iterator 属性
+        //也是可以执行的 并且执行后返回本身
+        // function* gn(){
+
+        // }
+        // let re=gn();
+        // console.log(re[Symbol.iterator]())
+        // console.log(re[Symbol.iterator]()===re)
+
+        //next方法的参数
+        //yield表达式本身是没有返回值的 返回的就是undefined
+        //next方法可以带一个参数 这个参数会被当做！！！！上一个！！！！ yield表达式的返回值
+        // function* gen(){
+        //     let y1=yield 'hello'
+        //     console.log(y1) //123
+        //     yield 'world'
+        //     return 123
+        // }
+        // let g=gen();
+        // console.log(g.next())
+        // console.log(g.next(123))
+        // console.log(g.next())
+
+        //如果想在第一个next传入值也输出应该怎么做？
+        //叫做从外部传入数据到内部,传入generator函数 返回一个函数 可以执行next
+        // function second(gen){
+        //     return function(){
+        //         let res=gen()
+        //         res.next()
+        //         return res
+        //     }
+        // }
+        // let first=second(function*(){
+        //     console.log(`这是第一次的yield${yield}`)
+        // })
+        // first().next('22222')
+
+        //for...of循环
+        // function* gen(){
+        //     yield 1
+        //     yield 2
+        //     yield 3
+        //     yield 4
+        //     yield 5
+        //     return 6
+        // }
+        // // return 后面的通过for...of 循环不会输出 因为done 变成了true for...of循环就会终止
+        // for(let g of gen()){
+        //     console.log(g) // 1 2 3 4 5 
+        // }
+
+        //抛出错误a
+        //1.函数体外抛出异常在generator函数内部去获取
+        //throw函数接收的参数 通过catch去获取
+        // let g=function*(){
+        //     try{
+        //         yield
+        //     }catch(e){
+        //         console.log(e)
+        //     }
+        // }
+        // let res=g();
+        // res.next();
+        // res.throw('抛出一个错误')
+
+        //generator 函数体外抛出异常 也可以在函数体外的catch获取
+        // let g=function*(){
+        //     yield
+        // }
+        // let res=g()
+        // res.next()
+        // try{
+        //     res.throw('抛出一个错误ffffffff')
+        // }catch(e){
+        //     console.log(e)
+        // }
+
+        //如果内部和外部都没有捕获异常 程序就会终止
+        // let gen=function*(){
+        //     yield
+        // }
+        // let res=gen();
+        // console.log(res.next())
+        // res.throw('错误')
+        // console.log(res.next())
+        
+        //程序不会终止
+        // try{
+        //     res.throw('错误')
+        // }catch(e){
+        //     console.log(e)
+        // }
+        // console.log(res.next()) //会输出{value: undefined, done: false}
+
+        //如果generator函数想要捕获异常 就必须通过next()去触发
+
+        // let g=function*(){
+        //     try{
+        //         yield
+        //     }catch(e){
+        //         console.log(e)
+        //     }
+        // }
+        // let res=g()
+        // res.next()
+        // res.throw('错误')
+
+        //return用法
+        //generator 函数在遇到return时done就会变成true 并会把return 的参数当作最后一个输出 如果没传参就是undefined 
+        // function* gen(){
+        //     yield 1
+        //     yield 2
+        //     yield 3
+        //     yield 4
+        //     yield 5
+        // }
+        // let g=gen()
+        // console.log(g.next())
+        // console.log(g.return('123')) //{value: "123", done: true}
+        // console.log(g.next()) //{value: undefined, done: true}
+        // console.log(g.next())  //{value: undefined, done: true}
+        // console.log(g.next())  //{value: undefined, done: true}
+
+        //try...finally  
+        //调用完return 不会执行finally里面的代码
+        // function* gen(){
+        //     yield 1+2
+        //     try{
+        //         yield 2
+        //         yield 3
+        //     }finally{
+        //         yield 4
+        //         yield 5
+        //     }
+        // }
+        // let g=gen()
+        // console.log(g.next())
+        // console.log(g.return('6666')) //{value: "6666", done: true}
+        // console.log(g.next())  //{value: undefined, done: true}
+        // console.log(g.next()) //{value: undefined, done: true}
+        // console.log(g.next()) //{value: undefined, done: true}
+        // console.log(g.next()) //{value: undefined, done: true}
+
+        //yield*表达式
+        // function* first(){
+        //     yield 1
+        //     yield 2
+        // }
+        // function* second(){
+        //     yield 3
+        //     //在这里调用first generator函数应该怎么做？
+        //     //1.for...of循环
+        //     // for(let f of first()){
+        //     //     yield f
+        //     // }
+        //     //2.yield*表达式
+        //     yield* first()
+        //     yield 4
+        // }
+        // let s=second();
+        // console.log(s.next())
+        // console.log(s.next())
+        // console.log(s.next())
+        // console.log(s.next())
+        // console.log(s.next())
+
+        //generator函数的this
+        // function* g(){}
+        // //generator函数也有prototype属性
+        // g.prototype.hello=function(){
+        //     return 'hello'
+        // }
+        // let res=g()
+        // console.log(res.hello()) //hello
+        // console.log(res instanceof g)  //true
+
+        // function* g(){
+        //     yield this.a=123
+        // }
+        // let res=g()
+        // res.next()
+        // console.log(res.a) //undefined
+
+        //generator 函数不能够被new。
+
+        // function* f(){
+        //     console.log(this)
+        //     this.a=123
+        //     yield this.b=234
+        //     yield this.c=456
+        // }
+        //let obj={}
+        //let res=f.call(obj)
+        // let res=f.call(f.prototype)
+        // console.log(res)
+        // console.log(res.next())
+        // console.log(res.next())
+        // console.log(res.a) //123
+        // console.log(res.b) //234
+        // console.log(res.c) //456
+        // // console.log(obj.a)
+        // // console.log(obj.b)
+        // // console.log(obj.c)
+
+        // 让generator 函数支持new
+        // function* f(){
+        //     this.a=123
+        //     yield this.b=234
+        //     yield this.c=345
+        // }
+        // function F(){
+        //     return f.call(f.prototype)
+        // }
+        // let res=new F()
+        // console.log(res.next())
+        // console.log(res.next())
+        // console.log(res.a)
+        // console.log(res.b)
+        // console.log(res.c)
+
+        //generator 函数异步应用
+        // function request(url){
+        //     axios.get(url).then((res)=>{
+        //         result.next(res)
+        //     })
+        // }
+        // function* getReq(){
+        //     let res1= yield request('http://127.0.0.1:2000/name')
+        //     console.log(res1)
+        //     let id=res1.data.data[0].id
+        //     let res2=yield request(`http://127.0.0.1:2000/wepon?id=${id}`)
+        //     console.log(res2)
+        // }
+        // let result=getReq()
+        // result.next()
+
+        //async await
+
+        // async function get(){
+        //     let res1= await axios.get('http://127.0.0.1:2000/name')
+        //     console.log(res1)
+        //     let id=res1.data.data[0].id
+        //     let res2=await axios.get(`http://127.0.0.1:2000/wepon?id=${id}`)
+        //     console.log(res2)
+        //     return 123
+        // }
+        // let res=get();
+        // res.then((res)=>{
+        //     console.log(res)
+        // }).catch((e)=>{ //异常捕获
+        //     console.log(e)
+        // })
+
+        //Promise.all()  适用于第二次请求和第一次请求没有关系
+        async function getAll(){
+           let id=2
+           let all=await Promise.all([(axios.get('http://127.0.0.1:2000/name')),(axios.get(`http://127.0.0.1:2000/wepon?id=${id}`))])
+           console.log(all)
+        }
+        getAll()
+
+    </script>
+</body>
+</html>

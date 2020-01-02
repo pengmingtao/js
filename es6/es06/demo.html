@@ -229,11 +229,36 @@
     // console.log(mathadd.#sum())//报错
     console.log(mathadd.conSum()) //3
 
-    
-    function get(){
-        name="peach"
+   class Father{}
+   class Children extends Father{
+       constructor(name,age){
+           super()
+           console.log(arguments)
+       }
+   }
+   let c=new Children('peach',18)
+
+   class A{
+        constructor(){
+            this.x = 1
+        }
+        static print(){
+            console.log(this.x);
+        }
     }
-    console.log(get.name)
+
+    class B extends A{
+        constructor(){
+            super()
+            this.x = 2
+        }
+        static fn(){
+            super.print()
+        }
+    }
+    B.x = 3
+    B.fn()
+   
 
     </script>
 </body>

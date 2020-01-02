@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>serve</title>
+</head>
+<body>
+    <script>
+    let GetJson=function(method,url){
+        return new Promise((reslove,reject)=>{
+            // const handle =
+            let xml = new XMLHttpRequest();
+            xml.open(method,url)
+            xml.onreadystatechange = function(){
+                if(this.readyState !== 4){
+                    return
+                }
+                if (this.status===200) {
+                    reslove(this.response)
+                } else {
+                    reject(new Error(this.statusText))
+                }
+            }
+            xml.responseType="json"
+            xml.setRequestHeader('accept','application/json')
+            xml.send();
+        })
+    }
+    
+    GetJson('GET','http://127.0.0.1:2000/name').then((res)=>{
+        console.log('123')
+        console.log(res)
+        let id=res.data[0].id
+        return GetJson('GET',`http://127.0.0.1:2000/wepon?id=${id}`)  //return 一个promise对象(.then)
+    },(res)=>{
+        console.log('3444')
+        console.log(res)
+    }).then((res)=>{
+        console.log(res)
+    })
+    </script>
+</body>
+</html>
