@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test01</title>
+    <script src="../utils/main.js"></script>
+</head>
+<body>
+    <script>
+        
+        xmlAjax({
+            url:'http://localhost:3000/',
+            method:'get',
+            headers:{
+                contentType:'application/json;charset=UTF-8'
+            }
+        }).then((res)=>{
+            
+            xmlAjax({
+                url:'http://localhost:3000/users',
+                method:'post',
+                headers:{
+                    contentType:'application/json;charset=UTF-8'
+                }
+            })
+
+        })
+    </script>
+</body>
+</html>

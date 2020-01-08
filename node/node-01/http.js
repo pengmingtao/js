@@ -5,6 +5,12 @@ const fs = require('fs');
  */
 http.createServer((req,res)=>{
     const {url,method,headers} =req;
+    console.log(method)
+    res.setHeader('Access-Control-Allow-Origin','http://192.168.0.88:8080') //允许跨域
+    res.setHeader('Access-Control-Allow-Headers','token,Content-Type')  //允许携带token 
+    if (method==='OPTIONS'){
+        res.end()
+    }
     if(url=='/'&& method=='GET'){
         fs.readFile('./package.json',(err,data)=>{
             if(err) {

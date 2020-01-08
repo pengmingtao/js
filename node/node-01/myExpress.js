@@ -11,14 +11,12 @@ class Application{
         })
     }
     handle(){
-        const server=http.createServer((req,res)=>{
-            const {pathname}=url.parse(req.url,true)
-            console.log(routers)
-            let find=routers.filter((v)=>{
-                return v.path == pathname && req.method.toLowerCase()==v.method
+        const server=http.createServer((request,response)=>{
+            const {pathname}=url.parse(request.url,true)
+            let result=routers.find((v)=>{
+                return v.path == pathname && request.method.toLowerCase()==v.method
             })
-            console.log(find)
-            find && find.callback(req,res)
+            result && result.callback(request,response)
         })
         server.listen(...arguments)
     }

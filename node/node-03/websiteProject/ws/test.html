@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="./main.css" rel="stylesheet">
+</head>
+<body>
+    
+<div id="wrapper" >
+    <div id="txtConsole" class="main-header">
+      
+    </div>
+    <div id="footer" class="footer">
+        <input type='text' class="ipt" placeholder="请输入内容..." id="chatpIpt"/>
+        <a href="javascript:;" class="btn" onclick="sendMsgHandler()">发送</a>       
+    </div>
+</div>
+
+<script type="text/javascript" src='./ws.js'></script>
+<script>
+// 向服务端发送数据
+function sendMsgHandler() {
+    var elem =  document.getElementById('chatpIpt');
+    var iptValue = elem.value;
+    //发送信息到服务端
+    // websocket.send({data:iptValue});
+    websocket.send(JSON.stringify({
+        name:'song',
+        info:iptValue
+    }));
+    elem.value = "";
+    elem.focus();
+}
+</script>
+</body>
+</html>

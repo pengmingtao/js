@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script>
+        (async () => {
+            axios.defaults.withCredentials = false;  //true 允许携带cookie  false 不携带
+            axios.defaults.baseURL = 'http://localhost:3000';
+            // const res = await axios.post("/users");  //简单请求： 一
+
+            var read1 = await axios.post("/info?name=laney&age=09",{
+                name:'ooooo'
+            }); 
+            console.log(read1);
+            //复杂请求
+            // const res = await axios.post("/info", {
+            //     headers: {
+            //         'X-Token': '123'
+            //     }
+            // })
+            // console.log('data', res.data)
+        })()
+    </script>
+</body>
+</html>

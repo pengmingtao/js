@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form  id="formImg">
+        <p><input type="file" name="uploadImg"></p>
+        <p><input type="button" value="提交" id="btnSubmit"></p>
+     </form>
+    <script>
+     
+            axios.defaults.withCredentials = false;  //true 允许携带cookie  false 不携带
+            axios.defaults.baseURL = 'http://localhost:3000';
+           
+            var btnSubmit =  document.getElementById('btnSubmit');
+            var formImg = document.getElementById('formImg');
+            var formData = new FormData(formImg);
+            btnSubmit.addEventListener('click',async function(){
+                //复杂请求
+                const res = await axios.post("/upload/img", formData,{
+                    headers:{'Content-Type':'multipart/form-data'}
+                })
+                console.log('data', res.data)
+
+                })
+            
+     
+    </script>
+</body>
+</html>

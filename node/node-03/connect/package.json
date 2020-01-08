@@ -1,0 +1,14 @@
+{
+  "name": "lessonThree",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect": "^3.7.0",
+    "cors": "^2.8.5",
+    "formidable": "^1.2.1",
+    "qs": "^6.9.1",
+    "url": "^0.11.0"
+  }
+}

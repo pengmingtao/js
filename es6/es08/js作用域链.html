@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js的作用域链</title>
+</head>
+<body>
+    <script>
+    // 对象的有些属性我们是可以直接访问到的 
+
+    // function get(){
+
+    // }
+    // console.log(get.name);
+
+    // js的有些属性是访问不到的 [[scope]] 域的意思
+    // js引擎自己去用我们用不到
+
+    // [[scope]] 存储的就是由这个函数产生而产生的很复杂的结构
+    // 执行期上下文的集合 这个集合呈现的是链式结构 这个才是真正的作用域链
+
+    // 系统会根据内部的原理定期的调用scope 系统自己用的属性
+    
+    // a函数定义
+    // function a(){
+    //     // b函数定义
+    //     function b(){
+
+    //         var b = 234
+    //     }
+    //     var a = 123
+    //     // b函数执行
+    //     b()
+    // }
+
+    // var global = 1;
+    // // a函数执行
+    // a()
+
+
+    // var a = 123;
+
+    // function get(){
+    //     var a = 345
+    //     console.log(a);
+        
+    // }
+    // get()
+
+
+    function a(){
+        // b函数定义
+        function b(){
+            
+            var b = 234
+            a = 0
+        }
+        var a = 123
+        // b函数执行
+        b()
+        console.log(a); // 0
+        
+    }
+
+    var global = 1;
+    // a函数执行
+    a()
+
+
+    function a(){
+        // b函数定义
+        function b(){
+            var b = 234
+            console.log(a);
+            
+        }
+        var a = 123
+        // b函数执行
+        return b
+    }
+
+    var global = 1;
+    // a函数执行
+    var res = a()
+    res()
+
+    
+    
+    
+    
+    
+    </script>
+</body>
+</html>

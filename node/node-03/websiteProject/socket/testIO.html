@@ -1,0 +1,28 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>websocket测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css"  href="main.css" />
+    <script src="./socket.io.dev.js"></script>
+</head>
+<body>
+    
+<div id="wrapper">
+    <div id="main">
+        <textarea readonly="readonly" id="txtConsole"></textarea>
+    </div>
+    <div id="footer">
+        <div class="ipt_container">
+            <input type='text' class="ipt" placeholder="请输入内容..." id="chatpIpt"/>
+        </div>
+        <div class="btn_container">
+            <a href="javascript:;" class="btn" onclick="sendMsgHandler()">发送</a>
+        </div>        
+    </div>
+</div>
+<script type="text/javascript" src='./socket.js'></script>
+</body>
+</html>
